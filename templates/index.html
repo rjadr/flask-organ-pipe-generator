@@ -1,0 +1,183 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>OpenSCAD Organ Pipes Generator</title>
+    <meta name="description" content="OpenSCAD Organ Pipes Generator">
+    <meta name="author" content="R.J. Adriaansen">
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+        .form-inline .form-group {
+            margin-right: 10px;
+        }
+        
+        .well-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(66, 139, 202);
+            border-color: rgb(53, 126, 189);
+        }
+        
+        .glyphicon {
+            margin-right: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form name="submitDetails" id="submitDetails" action="/download" method="POST">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                            <span class="glyphicon glyphicon-music">
+                            </span>OpenSCAD Busker Organ Pipe Generator
+                        </h4>
+                            </div>
+                            <div id="collapseOne">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <p>Generate an <a href="http://www.openscad.org/" target="_blank">OpenSCAD</a> model for busker organ pipes for laser or cnc cutting. Simply fill in the <a href="http://newt.phys.unsw.edu.au/jw/notes.html" target="_blank">midi number(s)</a> of the requested pipes and download the model. Or fiddle with the settings if you like. Download the zip file and extract both scad files to the same directory. Open pipes.scad to edit and export the file to the desired format.</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="grant1">Midi Number(s)</label>
+                                                <input type="text" class="form-control" id='grant1' placeholder="Midi number(s)" required="true" name="midinr" />
+                                                <div>Select the midi number(s) of the pipes you want to generate. Comma separate multiple numbers.</div>
+                                                {% if error %}
+                                                <br>
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> {{ error }}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-cog">
+                            </span>Settings</a>
+                        </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="cs">Speed of sound in mm/s</label>
+                                                <input type="number" min="0" class="form-control" id="cs" name="cs" value="340450" required="true"="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="pipe">Closed or open pipe</label>
+                                                <select class="form-control" id="pipe" name="pipe">
+                                                    <option>Closed</option>
+                                                    <option>Open</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="SA">Labium slope angle in degrees</label>
+                                                <input type="number" step="any" min="0" class="form-control" id="SA" name="SA" value="5" required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="HL">Labium lip height in mm</label>
+                                                <input type="number" step="any" min="0" class="form-control" id="HL" name="HL" value="1" required="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="TU">Diameter of the air tube in mm</label>
+                                                <input type="number" step="any" min="0" class="form-control" id="TU" name="TU" value="8" required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="SD">Diameter of the organ stop stick in mm</label>
+                                                <input type="number" step="any" min="0" class="form-control" id="SD" name="SD" value="6" required="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="T">Wall thickness in mm</label>
+                                                <input type="number" step="any" min="0" class="form-control" id="T" name="T" value="4" required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="F">Foot mount height in mm</label>
+                                                <input type="number" step="any" min="0" class="form-control" id="F" name="F" value="20" required="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="M">Halving number</label>
+                                                <input type="number" min="0" class="form-control" id="M" name="M" value="18" required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                            <span class="glyphicon glyphicon-download-alt">
+                            </span>Generate OpenSCAD Model
+                        </h4>
+                            </div>
+                            <div id="collapseOne">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <button type="submit" id="submit" class="btn btn-default">Generate</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
