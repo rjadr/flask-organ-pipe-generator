@@ -1,0 +1,4 @@
+audiolazy==0.6
+trianglesolver==1.1
+Flask==0.12.2
+solidpython==0.2.0
